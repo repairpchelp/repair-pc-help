@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    <style>
+        /* Style de base pour la page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #10e9b3;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            color:      #30b2bb;
+            font-size: 2.5em;
+        }
+
+        /* Formulaire pour ajouter un message */
+        .post-form {
+            margin-bottom: 40px;
+        }
+
+        .post-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .post-form button {
+            padding: 10px 20px;
+            background-color: #e70d20;
+            color: rgb(10, 14, 248);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .post-form button:hover {
+            background-color: #ccee0a;
+        }
+
+        /* Affichage des messages */
+        .posts {
+            margin-top: 20px;
+        }
+
+        .post {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-header {
+            font-weight: bold;
+            color: #68bddf;
+            margin-bottom: 10px;
+        }
+
+        .post p {
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Forum</h1>
+        </header>
+
+        <!-- Formulaire pour ajouter un message -->
+        <div class="post-form">
+            <h2>Ajouter un message</h2>
+            <form id="postForm">
+                <textarea id="message" rows="5" placeholder="Votre message" required></textarea><br><br>
+                <button type="submit">Poster</button>
+            </form>
+        </div>
+
+        <!-- Affichage des messages -->
+        <div class="posts" id="postsList">
+            <h2>Messages récents :</h2>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour générer un pseudo aléatoire
+        function generateRandomUsername() {
+            const adjectives = ["Vif", "Fou", "Mystique", "Rapide", "Sage", "Héroïque"];
+            const animals = ["Lynx", "Lion", "Aigle", "Serpent", "Tigre", "Panthère"];
+            const randomAdj = adjectives[Math.floor(Math.random() * adjectives.length)];
+            const randomAnim = animals[Math.floor(Math.random() * animals.length)];
+            const randomNum = Math.floor(Math.random() * 1000); // Ajouter un numéro aléatoire pour plus de diversité
+            return `${randomAdj}${randomAnim}${randomNum}`;
+        }
+
+        // Récupérer un pseudo unique pour l'utilisateur (via localStorage)
+        function getUsername() {
+            let username = localStorage.getItem('forumUsername');
+            if (!username) {
+                username = generateRandomUsername(); // Générer un pseudo si aucun pseudo n'est trouvé
+                localStorage.setItem('forumUsername', username); // Sauvegarder le pseudo dans localStorage
+            }
+            return username;
+        }
+
+        // Récupérer les messages du localStorage et les afficher
+        function loadMessages() {
+            const postsList = document.getElementById('postsList');
+            postsList.innerHTML = '<h2>Messages récents :</h2>'; // Réinitialiser la liste des messages
+
+            const posts = JSON.parse(localStorage.getItem('forumMessages')) || []; // Récupérer les messages du localStorage
+            posts.forEach(post => {
+                const postDiv = document.createElement('div');
+                postDiv.classList.add('post');
+                
+                const postHeader = document.createElement('div');
+                postHeader.classList.add('post-header');
+                postHeader.innerHTML = `<strong>${post.username}</strong> <span>${post.date}</span>`;
+                
+                const postMessage = document.createElement('p');
+                postMessage.textContent = post.message;
+
+                postDiv.appendChild(postHeader);
+                postDiv.appendChild(postMessage);
+
+                postsList.appendChild(postDiv);
+            });
+        }
+
+        // Ajouter un message dans le localStorage
+        function addMessage(username, message) {
+            const posts = JSON.parse(localStorage.getItem('forumMessages')) || [];
+
+            const newPost = {
+                username: username,
+                message: message,
+                date: new Date().toLocaleString() // Format de date
+            };
+
+            posts.push(newPost);
+            localStorage.setItem('forumMessages', JSON.stringify(posts)); // Sauvegarder dans le localStorage
+            loadMessages(); // Recharger les messages
+        }
+
+        // Gérer la soumission du formulaire
+        document.getElementById('postForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêcher le rechargement de la page
+
+            const message = document.getElementById('message').value.trim(); // Récupérer le message
+            const username = getUsername(); // Récupérer le pseudo unique de l'utilisateur
+
+            // Si un message est rempli, l'ajouter
+            if (message) {
+                addMessage(username, message); // Ajouter le message
+                document.getElementById('message').value = ''; // Réinitialiser le message
+            }
+        });
+
+        // Charger les messages au démarrage
+        window.onload = function() {
+            loadMessages();
+        };
+    </script>
+
+</body>
+</html>

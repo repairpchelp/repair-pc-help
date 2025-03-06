@@ -132,7 +132,7 @@
         // Récupérer les messages du localStorage et les afficher
         function loadMessages() {
             const postsList = document.getElementById('postsList');
-            postsList.innerHTML = '<h2>Messages récents :</h2>'; // Réinitialiser la liste des messages
+            postsList.innerHTML = '<h2>Notes Récentes :</h2>'; // Réinitialiser la liste des messages
 
             const posts = JSON.parse(localStorage.getItem('forumMessages')) || []; // Récupérer les messages du localStorage
             posts.forEach(post => {

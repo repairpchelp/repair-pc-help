@@ -19,6 +19,11 @@
         color: #333;
         text-align: center;
         padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Utiliser toute la hauteur de l'écran */
       }
 
       h1 {
@@ -27,11 +32,19 @@
         margin-bottom: 20px;
       }
 
+      /* Conteneur pour centrer l'image */
+      .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 30px;
+      }
+
       /* Image de l'ordinateur */
       img {
         max-width: 300px;
-        margin-bottom: 30px;
-        top: 100px;
+        height: auto;
       }
 
       /* Styles des boutons */
@@ -141,7 +154,11 @@
   <body>
 
     <h1>Réparer votre PC</h1>
-    <img src="logo-removebg-preview.png" alt="PC" />
+    
+    <!-- Conteneur pour centrer l'image -->
+    <div class="image-container">
+      <img src="logo-removebg-preview.png" alt="PC" />
+    </div>
 
     <a href="pcgamer.html" class="btn-support btn-gamer" target="_blank" aria-label="Accéder au serveur Dis">Coté PC Gamer</a>
     <a href="soin.html" class="btn-support btn-care" target="_blank" aria-label="Accéder au serveur Dis">Prendre soin de son PC</a>

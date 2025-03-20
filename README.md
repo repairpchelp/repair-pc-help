@@ -37,9 +37,7 @@ Bienvenue sur **Repair PC Help**, votre site de conseils pour tout ce qui concer
 
 ## 🌍 Contact
 
-Si vous avez des questions, des suggestions, ou besoin d’aide, contactez-nous via :
-- **Email** : contact@repairpchelp.com
-- **Téléphone** : +33 1 23 45 67 89
+Si vous avez des questions, des suggestions, ou besoin d’aide, contactez nous sur le support
 
 ## 📝 Pourquoi choisir Repair PC Help ?
 

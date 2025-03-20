@@ -1,6 +1,4 @@
-D'accord ! Voici un modèle de README pour un site de conseils informatiques :
 
----
 
 # Repair PC Help - Conseils Informatiques
 
